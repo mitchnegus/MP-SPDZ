@@ -1,0 +1,24 @@
+# Create a matrix to store the data from both parties
+max_points = 1000
+data = Matrix(max_points, 2, sint)
+
+# Load the points from the private parties inputs
+n_points = public_input()
+print_ln("Loading %s data points...", n_points)
+@for_range(n_points)
+def _(i):
+    for j in range(2):
+        data[i][j] = sint.get_input_from(j)
+
+print_ln("Data loaded.")
+
+# Compute the squared distance between the numbers
+sumsq = sint(0)
+@for_range(n_points)
+def _(i):
+    global sumsq
+    sumsq += (data[i][0] - data[i][1])**2
+
+# Display the squared sum
+print_ln("Squared Euclidean distance: %s", sumsq.reveal())
+
